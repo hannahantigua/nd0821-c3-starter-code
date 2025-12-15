@@ -1,13 +1,13 @@
 # Script to train machine learning model.
 
-from sklearn.model_selection import train_test_split
-
 import pandas as pd
 import pickle
 from sklearn.model_selection import train_test_split
 
 from ml.data import process_data
 from ml.model import train_model
+from ml.model import compute_model_metrics_on_slices, compute_model_metrics_overall
+
 
 cat_features = [
     "workclass",
@@ -43,3 +43,23 @@ if __name__ == "__main__":
 
     with open("model/lb.pkl", "wb") as f:
         pickle.dump(lb, f)
+
+    # overall performance
+    compute_model_metrics_overall(
+        df=data,
+        cat_features=cat_features,
+        model=model,
+        encoder=encoder,
+        lb=lb,
+        label="salary"
+    )
+
+    # slice based performance
+    # compute_model_metrics_on_slices(
+    #     df=data,
+    #     cat_features=cat_features,
+    #     model=model,
+    #     encoder=encoder,
+    #     lb=lb,
+    #     label="salary"
+    # )
