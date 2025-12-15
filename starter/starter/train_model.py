@@ -2,12 +2,12 @@
 
 from sklearn.model_selection import train_test_split
 
-# Add the necessary imports for the starter code.
+import pandas as pd
+import pickle
+from sklearn.model_selection import train_test_split
 
-# Add code to load in the data.
-
-# Optional enhancement, use K-fold cross validation instead of a train-test split.
-train, test = train_test_split(data, test_size=0.20)
+from ml.data import process_data
+from ml.model import train_model
 
 cat_features = [
     "workclass",
@@ -19,10 +19,27 @@ cat_features = [
     "sex",
     "native-country",
 ]
-X_train, y_train, encoder, lb = process_data(
-    train, categorical_features=cat_features, label="salary", training=True
-)
 
-# Proces the test data with the process_data function.
+if __name__ == "__main__":
+    data = pd.read_csv("starter/data/census.csv")
+    # print(data.columns)  # check csv has been cleaned
 
-# Train and save a model.
+    train, _ = train_test_split(data, test_size=0.20)
+
+    X_train, y_train, encoder, lb = process_data(
+        train,
+        categorical_features=cat_features,
+        label="salary",
+        training=True
+    )
+
+    model = train_model(X_train, y_train)
+
+    with open("model/model.pkl", "wb") as f:
+        pickle.dump(model, f)
+
+    with open("model/encoder.pkl", "wb") as f:
+        pickle.dump(encoder, f)
+
+    with open("model/lb.pkl", "wb") as f:
+        pickle.dump(lb, f)
