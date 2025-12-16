@@ -4,9 +4,9 @@ import pandas as pd
 import pickle
 from sklearn.model_selection import train_test_split
 
-from ml.data import process_data
-from ml.model import train_model
-from ml.model import compute_model_metrics_on_slices, compute_model_metrics_overall
+from starter.ml import process_data
+from starter.ml.model import train_model
+from starter.ml.model import compute_model_metrics_overall
 
 
 cat_features = [

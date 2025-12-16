@@ -1,9 +1,8 @@
-import pytest
 import pandas as pd
 import numpy as np
 
-from starter.starter.ml.data import process_data
-from starter.starter.ml.model import train_model, inference
+from starter.ml.data import process_data
+from starter.ml.model import train_model, inference
 
 # Sample data
 SAMPLE_DATA = pd.DataFrame(

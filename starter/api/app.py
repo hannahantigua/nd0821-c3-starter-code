@@ -6,8 +6,8 @@ from fastapi import FastAPI
 from pydantic import BaseModel, Field
 from typing import Dict
 
-from starter.starter.ml.data import process_data
-from starter.starter.ml.model import inference
+from ml.data import process_data
+from ml.model import inference
 
 # Load trained artifacts
 with open("model/model.pkl", "rb") as f:
