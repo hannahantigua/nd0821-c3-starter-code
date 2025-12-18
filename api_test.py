@@ -1,6 +1,6 @@
 import requests
 
-API_URL = ""
+API_URL = "https://nd0821-c3-starter-code-gdwb.onrender.com"
 
 payload = {
     "age": 37,
