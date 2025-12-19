@@ -1,13 +1,17 @@
 from fastapi.testclient import TestClient
+
 from api.app import app
 
 client = TestClient(app)
+
 
 # Test GET /
 def test_read_root():
     response = client.get("/")
     assert response.status_code == 200
-    assert response.json() == {"message": "Welcome to the Census Income Classifier API!"}
+    assert response.json() == {
+        "message": "Welcome to the Census Income Classifier API!"
+    }
 
 
 # Test POST /predict (<=50K)
@@ -26,7 +30,7 @@ def test_predict_low_income():
         "capital-gain": 0,
         "capital-loss": 0,
         "hours-per-week": 40,
-        "native-country": "United-States"
+        "native-country": "United-States",
     }
 
     response = client.post("/predict", json=payload)
@@ -52,7 +56,7 @@ def test_predict_high_income():
         "capital-gain": 5000,
         "capital-loss": 0,
         "hours-per-week": 60,
-        "native-country": "United-States"
+        "native-country": "United-States",
     }
 
     response = client.post("/predict", json=payload)

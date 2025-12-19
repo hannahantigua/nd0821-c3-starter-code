@@ -16,7 +16,7 @@ payload = {
     "capital-gain": 0,
     "capital-loss": 0,
     "hours-per-week": 40,
-    "native-country": "United-States"
+    "native-country": "United-States",
 }
 
 response = requests.post(API_URL, json=payload)

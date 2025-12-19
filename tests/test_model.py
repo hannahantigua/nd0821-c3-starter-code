@@ -1,8 +1,8 @@
-import pandas as pd
 import numpy as np
+import pandas as pd
 
 from starter.ml.data import process_data
-from starter.ml.model import train_model, inference
+from starter.ml.model import inference, train_model
 
 # Sample data
 SAMPLE_DATA = pd.DataFrame(
@@ -36,27 +36,39 @@ cat_features = [
     "native-country",
 ]
 
+
 def test_process_data():
     X, y, encoder, lb = process_data(
-        SAMPLE_DATA, categorical_features=cat_features, label="salary", training=True
+        SAMPLE_DATA,
+        categorical_features=cat_features,
+        label="salary",
+        training=True,
     )
     assert X.shape[0] == 2
     assert len(y) == 2
     assert encoder is not None
     assert lb is not None
 
+
 def test_train_model():
     X, y, encoder, lb = process_data(
-        SAMPLE_DATA, categorical_features=cat_features, label="salary", training=True
+        SAMPLE_DATA,
+        categorical_features=cat_features,
+        label="salary",
+        training=True,
     )
     model = train_model(X, y)
     assert model is not None
     # Check model has a predict method
     assert hasattr(model, "predict")
 
+
 def test_inference():
     X, y, encoder, lb = process_data(
-        SAMPLE_DATA, categorical_features=cat_features, label="salary", training=True
+        SAMPLE_DATA,
+        categorical_features=cat_features,
+        label="salary",
+        training=True,
     )
     model = train_model(X, y)
     preds = inference(model, X)

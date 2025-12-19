@@ -1,7 +1,8 @@
-import pandas as pd
-from sklearn.metrics import fbeta_score, precision_score, recall_score
 from sklearn.linear_model import LogisticRegression
+from sklearn.metrics import fbeta_score, precision_score, recall_score
+
 from .data import process_data
+
 
 def train_model(X_train, y_train):
     """
@@ -25,7 +26,8 @@ def train_model(X_train, y_train):
 
 def compute_model_metrics(y, preds):
     """
-    Validates the trained machine learning model using precision, recall, and F1.
+    Validates the trained machine learning model using precision, recall,
+    and F1.
 
     Inputs
     ------
@@ -46,7 +48,8 @@ def compute_model_metrics(y, preds):
 
 
 def inference(model, X):
-    """ Run model inferences and return the predictions.
+    """
+    Run model inferences and return the predictions.
 
     Inputs
     ------
@@ -62,9 +65,12 @@ def inference(model, X):
     return model.predict(X)
 
 
-def compute_model_metrics_on_slices(df, cat_features, model, encoder, lb, label="salary"):
+def compute_model_metrics_on_slices(
+    df, cat_features, model, encoder, lb, label="salary"
+):
     """
-    Computes and prints model performance metrics for slices of categorical features.
+    Computes and prints model performance metrics for slices of
+    categorical features.
 
     Inputs
     ------
@@ -81,30 +87,37 @@ def compute_model_metrics_on_slices(df, cat_features, model, encoder, lb, label=
     for feature in cat_features:
         print(f"\nFeature: {feature}")
         for value in df[feature].unique():
-            # Filter for this slice
             slice_df = df[df[feature] == value]
             if slice_df.empty:
                 continue
 
-            # Process the data
             X_slice, y_slice, _, _ = process_data(
                 slice_df,
                 categorical_features=cat_features,
                 label=label,
                 training=False,
                 encoder=encoder,
-                lb=lb
+                lb=lb,
             )
 
-            # Make predictions
             preds = inference(model, X_slice)
 
-            # Compute metrics
-            precision, recall, f1 = compute_model_metrics(y_slice, preds)
+            precision, recall, f1 = compute_model_metrics(
+                y_slice,
+                preds,
+            )
 
-            print(f"  Value: {value} | Precision: {precision:.3f}, Recall: {recall:.3f}, F1: {f1:.3f}")
+            print(
+                f"  Value: {value} | "
+                f"Precision: {precision:.3f}, "
+                f"Recall: {recall:.3f}, "
+                f"F1: {f1:.3f}"
+            )
 
-def compute_model_metrics_overall(df, cat_features, model, encoder, lb, label="salary"):
+
+def compute_model_metrics_overall(
+    df, cat_features, model, encoder, lb, label="salary"
+):
     """
     Computes and prints overall model performance metrics on a dataset.
 
@@ -120,20 +133,17 @@ def compute_model_metrics_overall(df, cat_features, model, encoder, lb, label="s
     label : str
         Name of the target column
     """
-    # Process the full dataset
     X, y, _, _ = process_data(
         df,
         categorical_features=cat_features,
         label=label,
         training=False,
         encoder=encoder,
-        lb=lb
+        lb=lb,
     )
 
-    # Run inference
     preds = inference(model, X)
 
-    # Compute metrics
     precision, recall, f1 = compute_model_metrics(y, preds)
 
     print("\nOverall Performance:")

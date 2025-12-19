@@ -1,10 +1,11 @@
 # api/app.py
 
 import pickle
+from typing import Dict
+
 import pandas as pd
 from fastapi import FastAPI
 from pydantic import BaseModel, Field
-from typing import Dict
 
 from ml.data import process_data
 from ml.model import inference
@@ -28,6 +29,7 @@ cat_features = [
     "sex",
     "native-country",
 ]
+
 
 # Pydantic model
 class CensusData(BaseModel):
@@ -63,9 +65,10 @@ class CensusData(BaseModel):
                 "capital-gain": 0,
                 "capital-loss": 0,
                 "hours-per-week": 40,
-                "native-country": "United-States"
+                "native-country": "United-States",
             }
         }
+
 
 # FastAPI app
 app = FastAPI(title="Census Income Classifier API")
@@ -95,7 +98,7 @@ def predict_income(data: CensusData) -> Dict[str, str]:
         label="salary",  # label not used but required by function
         training=False,
         encoder=encoder,
-        lb=lb
+        lb=lb,
     )
 
     # Make prediction
